@@ -33,15 +33,14 @@ having tipoServico = 'Conserto';
 
 -- Calculando o valor total dos serviços e peças vendidos:
 select sum(valorServico) as Somatória_Serviços, round(sum(valorPeca),2) as Somatória_Peças
-from servico, peca
-where idServico = idPeca;
+from ordem_servico inner join peca on idPeca = idOrdemServico
+inner join servico on idOrdemServico = idServico;
 
 
 -- Calculando o valor total das ordens de serviço:
-select round(sum(valorServico + valorPeca),2) as Somatória_OS
-from servico, peca
-where idServico = idPeca;
-
+select round(sum(valorPeca + valorServico),2) as Somatória_OS
+from ordem_servico inner join peca on idPeca = idOrdemServico
+inner join servico on idOrdemServico = idServico;
 
 -- Relação de veículos por cliente:
 select concat(primeiroNome, ' ', inicialNomeMeio, ' ', sobrenome) as Nome_Completo, modelo as Modelo_Veículo, montadora as Montadora,
